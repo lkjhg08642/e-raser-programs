@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-raser</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <!--<div id="welcomeModal" class="modal">
+            <div class="welcomemodal-content">
+                <h2>Welcome to E-raser!</h2>
+                <p>This is your smart vertical roomba. Customize your setup to get started!</p>
+                <button class = "next-button" onclick="nextButton()">Next Page</button>
+            </div>
+            <span class="close-button">&times;</span>
+            <img id="initial-webcam" src="{{ url_for('video_feed') }}" alt="Webcam Stream" />
+        </div>
+
+        <div id="configModal" class="modal">
+            <div class="configmodal-content">
+                <h2>Configure your cleaning area!</h2>
+                <p>Enter the size of your cleaning area:</p>
+                <div class = "wb-config">
+                    <input type="text" id="width" name="width">
+                    <select id="dimension">
+                        <option value="in">IN</option>
+                        <option value="cm">CM</option>
+                    </select>
+                    <input type="text" id="height" name="height">
+                    <select id="dimension2">
+                        <option value="in">IN</option>
+                        <option value="cm">CM</option>
+                    </select>
+                </div>
+                <button class = "next-button" onclick="configButton()">Next Page</button>
+            </div>
+        </div>
+
+        <div id="takepicModal" class="modal">
+            <div class="takepicmodal-content">
+                <h2>Configure your cleaning area!</h2>
+                <p>Take an picture of your whiteboard:</p>
+                <div class="initial-cam">
+                    <img id="initial-webcam" src="{{ url_for('video_feed') }}" alt="Webcam Stream" />
+                </div>
+                <div class="">
+                    <button class = "next-button" onclick="takePicture()">Take Picture</button>
+                    <button class = "next-button" onclick="backToCam()">Go Back</button>
+                    <button class = "next-button" onclick="takePicture()">Confirm Image</button>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="header">Welcome to E-raser</div>
+        
+        <div class="stuff">
+            <div class = "left">
+                <div class="wb-specs-title">
+                    <h3>WHITEBOARD SPECS *</h3>
+                </div>
+
+                <div class="wb-specs">
+                    <!--<div class="wb-title"><h4>Whiteboard Size:</h4></div>-->
+                    <input type="text" id="width" name="width">
+                    <select id="dimension">
+                        <option value="in">IN</option>
+                        <option value="cm">CM</option>
+                    </select>
+                    <input type="text" id="height" name="height">
+                    <select id="dimension2">
+                        <option value="in">IN</option>
+                        <option value="cm">CM</option>
+                    </select>
+                </div>
+
+                <div class="space"></div>
+            
+                <div class="top-section">
+                    <div class="schedule">
+                        <h3>SCHEDULE</h3>
+                        <div id="schedule-content"></div>
+                    </div>
+                    <label class="toggle-button">
+                        <input type="checkbox" id="toggle" onchange="toggleScheduleFade()" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="schedule-time">
+                    <p>Every</p>
+                    <select id="amount">
+                        <option value="one">1</option>
+                        <option value="two">2</option>
+                        <option value="three">3</option>
+                        <option value="four">4</option>
+                        <option value="five">5</option>
+                        <option value="six">6</option>
+                        <option value="seven">7</option>
+                        <option value="eight">8</option>
+                        <option value="nine">9</option>
+                        <option value="ten">10</option>
+                        <option value="eleven">11</option>
+                        <option value="twelve">12</option>
+                    </select>
+                    <select id="time-unit">
+                        <option value="hours">hours</option>
+                        <option value="day" selected>days</option>
+                        <option value="week">weeks</option>
+                        <option value="month">months</option>
+                    </select>
+                    <p id = "at">at</p>
+                    <select id="time-dropdown">
+                        <option value="one">1</option>
+                        <option value="two">2</option>
+                        <option value="three">3</option>
+                        <option value="four">4</option>
+                        <option value="five">5</option>
+                        <option value="six">6</option>
+                        <option value="seven">7</option>
+                        <option value="eight">8</option>
+                        <option value="nine">9</option>
+                        <option value="ten">10</option>
+                        <option value="eleven">11</option>
+                        <option value="twelve">12</option>
+                    </select>
+                    <p id = "colon">:</p>
+                    <select id="minute-dropdown">
+                        <option value="0">00</option>
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                        <option value="32">32</option>
+                        <option value="33">33</option>
+                        <option value="34">34</option>
+                        <option value="35">35</option>
+                        <option value="36">36</option>
+                        <option value="37">37</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                        <option value="41">41</option>
+                        <option value="42">42</option>
+                        <option value="43">43</option>
+                        <option value="44">44</option>
+                        <option value="45">45</option>
+                        <option value="46">46</option>
+                        <option value="47">47</option>
+                        <option value="48">48</option>
+                        <option value="49">49</option>
+                        <option value="50">50</option>
+                        <option value="51">51</option>
+                        <option value="52">52</option>
+                        <option value="53">53</option>
+                        <option value="54">54</option>
+                        <option value="55">55</option>
+                        <option value="56">56</option>
+                        <option value="57">57</option>
+                        <option value="58">58</option>
+                        <option value="59">59</option>
+                        
+                    </select>
+                    <select id="am-pm">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                    <button class = "sendinfo" onclick="send_info()">Confirm</button>
+                </div>
+            </div>
+
+            <div class="right">
+                <div class="whiteboard-title">
+                    <h3>WHITEBOARD CAM</h3>
+                    <label class="toggle-button">
+                        <input type="checkbox" id="toggle2" onchange="toggleCam()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="wb-cam">
+                    <div class="whiteboard-cam">
+                        <img id="webcam" src="{{ url_for('video_feed') }}" alt="Webcam Stream" />
+                        <canvas id="drawingCanvas"></canvas>
+                    </div>
+
+                    <div class="cleanall">
+                        <button class="clean-all">Clean all</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+
+        window.onload = function() {
+            const configModal = document.getElementById("configModal")
+            const welcomeModal = document.getElementById("welcomeModal")
+            const takepicModal = document.getElementById("takepicModal")
+
+            welcomeModal.style.display = 'flex  ';
+            configModal.style.display = 'none';
+            takepicModal.style.display = 'none';
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    welcomeModal.style.display = "none";
+                }
+            };
+        };
+
+        /*async function send_info() {
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            const width_dimension = document.getElementById('dimension').value;
+            const height_dimension = document.getElementById('dimension2').value;
+
+            try {
+                const response = await fetch('/submit_info', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ width: width })
+                });
+
+                const result = await response.json();
+                alert('Server says: ' + result.message);
+            } catch (error) {
+                alert('Error sending width: ' + error);
+            }
+        }*/
+
+        function nextButton() {
+            const welcomeModal = document.getElementById('welcomeModal');
+            const configModal = document.getElementById("configModal")
+            const takepicModal = document.getElementById("takepicModal")
+
+            welcomeModal.style.display = 'none';
+            configModal.style.display = 'flex';
+            takepicModal.style.display = 'none';
+        }
+
+        function configButton() {
+            const welcomeModal = document.getElementById('welcomeModal');
+            const configModal = document.getElementById("configModal")
+            const takepicModal = document.getElementById("takepicModal")
+
+            welcomeModal.style.display = 'none';
+            configModal.style.display = 'none';
+            takepicModal.style.display = 'flex';
+        }
+
+        function takePicture() {
+            const video = document.getElementById('initial-webcam');
+            canvas.width = video.width;
+            canvas.height = video.height;
+
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/png');
+            video.src = imageData
+        }
+
+        function backToCam() {
+            const video = document.getElementById('initial-webcam');
+            video.src = '/video_feed';
+        }
+
+        function toggleScheduleFade() {
+            const scheduleToggle = document.getElementById('toggle').checked;
+            const scheduleTime = document.querySelector('.schedule-time');
+
+            if (scheduleToggle) {
+                scheduleTime.classList.remove('faded');
+            } else {
+                scheduleTime.classList.add('faded');
+            }
+        }
+
+        // Run once when page loads
+        toggleScheduleFade();
+
+        // Add event listener on the schedule toggle checkbox
+        document.getElementById('toggle').addEventListener('change', toggleScheduleFade);
+
+        function toggleTimeAndAmPm() {
+            const unit = document.getElementById('time-unit').value;
+            const timeDropdown = document.getElementById('time-dropdown');
+            const ampmDropdown = document.getElementById('am-pm');
+            const at_words = document.getElementById('at');
+            const colon_word = document.getElementById('colon');
+            const minDropdown = document.getElementById('minute-dropdown');
+
+            if (unit === 'hours') {
+                timeDropdown.style.display = 'none';
+                ampmDropdown.style.display = 'none';
+                minDropdown.style.display = 'none';
+                at_words.style.display = 'none';
+                colon_word.style.display = 'none';
+            } else {
+                timeDropdown.style.display = 'inline-block'; // or 'block' depending on layout
+                ampmDropdown.style.display = 'inline-block';
+                at_words.style.display = 'inline-block';
+                colon_word.style.display = 'inline-block';
+                minDropdown.style.display = 'inline-block';
+            }
+        }
+
+        // Run once on page load
+        toggleTimeAndAmPm();
+
+        // Add event listener for changes
+        document.getElementById('time-unit').addEventListener('change', toggleTimeAndAmPm);
+
+        function toggleCam() {
+            const camToggle = document.getElementById('toggle2').checked;
+            const webcam = document.getElementById('webcam');
+            const canvas = document.getElementById('drawingCanvas');
+
+            if (camToggle) {
+                webcam.src = '/video_feed';
+                webcam.style.display = 'block';
+                canvas.style.display = 'block';
+            } else {
+                webcam.src = '';
+                webcam.style.display = 'none';
+                canvas.style.display = 'none';
+            }
+        }
+
+        const image = document.getElementById('webcam');
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let startX = 0, startY = 0, endX = 0, endY = 0, isDragging = false;
+
+        function resizeCanvasToImage() {
+            const rect = image.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+        }
+
+        const initimage = document.getElementById('initial-cam');
+        const initcanvas = document.getElementById('initial-canvas');
+        const initctx = initcanvas.getContext('2d');
+        
+        function resizeInitCanvasToImage() {
+            const rect = initimage.getBoundingClientRect();
+            initcanvas.width = rect.width;
+            initcanvas.height = rect.height;
+            initcanvas.style.width = rect.width + 'px';
+            initcanvas.style.height = rect.height + 'px';
+        }
+        toggleCam()
+
+        window.addEventListener('resize', resizeCanvasToImage);
+        image.addEventListener('load', resizeCanvasToImage);
+        image.onload = () => {
+            resizeCanvasToImage();
+        };
+
+        const clearCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const drawBox = () => {
+            clearCanvas();
+            const width = endX - startX;
+            const height = endY - startY;
+            ctx.beginPath();
+            ctx.rect(startX, startY, width, height);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'green';
+            ctx.stroke();
+            ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+            ctx.fill();
+        };
+
+        image.addEventListener('mousedown', (e) => {
+            const rect = image.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            endX = startX;
+            endY = startY;
+            isDragging = true;
+        });
+
+        image.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = image.getBoundingClientRect();
+            endX = e.clientX - rect.left;
+            endY = e.clientY - rect.top;
+            drawBox();
+        });
+
+        image.addEventListener('mouseup', () => isDragging = false);
+    </script>
+</body>
+</html>
