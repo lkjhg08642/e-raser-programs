@@ -12,14 +12,20 @@ app = Flask(__name__)
 wb_width = 0
 wb_height = 0
 
+# Replace with your Feather's BLE name or address
+TARGET_NAME = "Nano33IoT_UART"
+UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
+UART_RX_CHAR_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e"
+UART_TX_CHAR_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
+
 @app.route('/save_dimensions', methods=['POST'])
 def save_dimensions():
     data = request.get_json()
     wb_width = data.get('width')
     wb_height = data.get('height')
     x = Fraction(int(wb_width)/int(wb_height)).limit_denominator()
-    wb_width = x.numerator * 400
-    wb_height = x.denominator * 400
+    wb_width = x.numerator * 800
+    wb_height = x.denominator * 800
     return jsonify({"message": f"Width received: {wb_width}"}), 200
 
 
@@ -142,5 +148,6 @@ def video_feed():
 def index():
     return render_template('index2.html')
 
+#asyncio.run(mainloop())
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)

@@ -59,6 +59,7 @@
                     </div>
                     <button class = "buttons" onclick="processImage()">Detect Edges With AI</button>
                     <button class = "buttons" onclick="manualConfigure()">Manually Configure Cleaning Area</button>
+                    <button class = "buttons" onclick="manualConfigure()">Confirm Selection</button>
                 </div>  
             </div>
 
@@ -222,8 +223,8 @@
             const area_canvas = document.getElementById('area-canvas');
             const area_ctx = area_canvas.getContext('2d');
 
-            let corner1 = [0,0], corner2 = [0,0], corner3 = [0,0], corner4 = [0,0]
-            
+            let clickcount = 0, manual = false, corners = [];
+
             function resizeInitCanvasToImage() {
                 const rect = init_webcam.getBoundingClientRect();
                 init_canvas.height = rect.height;
@@ -328,6 +329,7 @@
             }
         
             function processImage(){
+                manual = false;
                 fetch('/detect_board', {
                     method: 'POST'
                 })
@@ -351,45 +353,43 @@
 
             const clearAreaCanvas = () => area_ctx.clearRect(0, 0, area_canvas.width, area_canvas.height);
             
-            let clickcount = 0;
             area_canvas.addEventListener('click', (e) => {
-                resizeAreaCanvasToImage();
-                rect = area_canvas.getBoundingClientRect()
-                if (clickcount == 0){
-                    area_ctx.beginPath();
-                    corner1 = [e.clientX - rect.left, e.clientY - rect.top]
-                    area_ctx.moveTo(corner1[0], corner1[1])
-                    clickcount += 1;
-                }
-                else if (clickcount == 1){
-                    corner2 = [e.clientX - rect.left, e.clientY - rect.top]
-                    area_ctx.lineTo(corner2[0], corner2[1])
-                    clickcount += 1;
-                }
-                else if (clickcount == 2){
-                    corner3 = [e.clientX - rect.left, e.clientY - rect.top]
-                    area_ctx.lineTo(corner3[0], corner3[1])
-                    clickcount += 1;
-                }
-                else if (clickcount == 3){
-                    corner4 = [e.clientX - rect.left, e.clientY - rect.top]
-                    area_ctx.lineTo(corner4[0], corner4[1])
-                    clickcount += 1;
-                }
-                else if (clickcount == 4){
-                    clickcount = 1;
-                    clearAreaCanvas()
-                    area_ctx.beginPath();
-                    corner1 = [e.clientX - rect.left, e.clientY - rect.top]
-                }
+                if (manual == true){
+                    let rect = area_canvas.getBoundingClientRect();
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
+                    rect = area_canvas.getBoundingClientRect()
+                    area_ctx.strokeStyle = 'red';
 
-                
+                    if (clickcount === 0) {
+                        clearAreaCanvas();           // start fresh
+                        corners = [];                // reset corners
+                        area_ctx.beginPath();
+                        area_ctx.moveTo(x, y);
+                    } else {
+                        area_ctx.lineTo(x, y);
+                        area_ctx.stroke();
+                    }
+
+                    corners.push([x, y]);            // store corner
+                    clickcount++;
+
+                    if (clickcount === 4) {
+                        // close shape
+                        area_ctx.closePath();
+                        area_ctx.stroke();
+                        
+                        clickcount = 0; // reset for next shape
+                    }
+                }
             });
 
             function manualConfigure(){
+                manual = true;
                 area_image.src = "static/saved_image.jpeg" + "?t=" + new Date().getTime();
                 area_image.onload = () => {
                     resizeAreaCanvasToImage();
+                    area_ctx.clearRect(0, 0, area_canvas.width, area_canvas.height);
 
                     welcomeModal.style.display = 'none';
                     configModal.style.display = 'none';

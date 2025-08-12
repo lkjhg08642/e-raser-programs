@@ -106,6 +106,7 @@ option {
     width: 400px;
     height: auto;
     display: block;
+    pointer-events: none;
 }
 
 .image-wrap canvas{
@@ -113,5 +114,4 @@ option {
     top: 0;
     left: 0;
     border: 1px solid red;
-    pointer-events: none;
 }
